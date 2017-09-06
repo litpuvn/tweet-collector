@@ -11,3 +11,10 @@ https://github.com/tweepy/tweepy
 3. Edit config.py with your app authentication tokens
 
 4. Enjoy the command line
+
+
+## Reference
+
+The code is learnt from this blog
+
+https://dev.to/bhaskar_vk/how-to-use-twitters-search-rest-api-most-effectively
