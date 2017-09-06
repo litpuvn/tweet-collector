@@ -78,7 +78,7 @@ if __name__ == '__main__':
                     break
 
                 for tweet in new_tweets:
-                    f.write(json.dump(tweet._json) + '\n')
+                    f.write(json.dumps(tweet._json) + '\n')
 
                 tweetCount += len(new_tweets)
                 print("Downloaded {0} tweets".format(tweetCount))
