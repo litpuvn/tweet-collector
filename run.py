@@ -69,7 +69,7 @@ if __name__ == '__main__':
     endDate = arrow.get(args.endDate, 'YYYY-MM-DD').replace(tzinfo='local')
 
     tweetCount = 0
-    print("Downloading max {0} tweets".format(maxTweets))
+    print("Downloading tweets from {0} to {1} with keyword {2}".format(args.startDate, args.endDate, args.keywords ))
     noMoreTweet = False
     with open(fName, 'w') as f:
         while not noMoreTweet:
