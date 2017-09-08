@@ -10,7 +10,7 @@ import json
 import os
 import arrow
 import pytz
-
+import os.path
 
 def get_parser():
     """Get parser for command line arguments."""
@@ -71,34 +71,48 @@ if __name__ == '__main__':
     tweetCount = 0
     print("Downloading tweets from {0} to {1} with keyword {2}".format(args.startDate, args.endDate, args.keywords ))
     noMoreTweet = False
-    with open(fName, 'w') as f:
-        while not noMoreTweet:
-            try:
-                if (not sinceId):
-                    new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=endDate.format('YYYY-MM-DD'))
-                else:
-                    new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=endDate.format('YYYY-MM-DD'), since_id=sinceId)
+    newFile = False
 
-                if not new_tweets:
-                    print("No more tweets found")
+    while not noMoreTweet:
+        try:
+            if (not sinceId):
+                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=endDate.format('YYYY-MM-DD'))
+            else:
+                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=endDate.format('YYYY-MM-DD'), since_id=sinceId)
+
+            if not new_tweets:
+                print("No more tweets found")
+                noMoreTweet = True
+                break
+
+            for tweet in new_tweets:
+                createdAt = pytz.utc.localize(tweet.created_at)
+                if (createdAt < startDate.datetime):
                     noMoreTweet = True
                     break
 
-                for tweet in new_tweets:
-                    createdAt = pytz.utc.localize(tweet.created_at)
-                    if (createdAt < startDate.datetime):
-                        noMoreTweet = True
-                        break
-                    f.write(json.dumps(tweet._json) + '\n')
-                    tweetCount += 1
+                fName = createdAt.strftime('%Y-%m-%d')
+                if (not os.path.isfile(fName)):
+                    # close previous file
+                    if (not f and not f.closed):
+                        f.close()
+                    # open new file name to write
+                    f = open(fName, 'w')
+                else:
+                    # open existing file to write
+                    if (not f or f.closed):
+                        f = open(fName, 'a')
 
-                print("Downloaded {0} tweets".format(tweetCount))
-                sinceId = new_tweets[-1].id
-            except tweepy.TweepError as e:
-                # Just exit if any error
-                print("some error : " + str(e))
-                noMoreTweet = True
+                f.write(json.dumps(tweet._json) + '\n')
+                tweetCount += 1
 
-                break
+            print("Downloaded {0} tweets".format(tweetCount))
+            sinceId = new_tweets[-1].id
+        except tweepy.TweepError as e:
+            # Just exit if any error
+            print("some error : " + str(e))
+            noMoreTweet = True
 
-    print ("Downloaded {0} tweets, Saved to {1}".format(tweetCount, fName))
+            break
+
+    #print ("Downloaded {0} tweets, Saved to {1}".format(tweetCount, fName))
