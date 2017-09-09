@@ -66,9 +66,6 @@ if __name__ == '__main__':
     # else default to no lower limit, go as far back as API allows
     sinceId = None
 
-    args.startDate = "2017-09-01"
-    args.endDate = "2017-09-01"
-
     startDate = arrow.get(args.startDate, 'YYYY-MM-DD').replace(tzinfo='local')
     endDate = arrow.get(args.endDate, 'YYYY-MM-DD').replace(tzinfo='local')
 
