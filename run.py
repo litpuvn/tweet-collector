@@ -56,7 +56,6 @@ if __name__ == '__main__':
     api = tweepy.API(auth)
     #collecting data
     searchQuery = '#' + args.keywords  # this is what we're searching for
-    maxTweets = 100  # Some arbitrary large number
     tweetsPerQry = 100  # this is the max the API permits
     fName = 'tweets.txt'  # We'll store the tweets in a text file.
 
