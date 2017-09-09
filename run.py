@@ -1,6 +1,8 @@
 import tweepy
 from tweepy import Stream
 from tweepy import OAuthHandler
+from datetime import timedelta
+
 from tweepy.streaming import StreamListener
 import time
 import argparse
@@ -71,15 +73,24 @@ if __name__ == '__main__':
     print("Downloading tweets from {0} to {1} with keyword {2}".format(args.startDate, args.endDate, args.keywords ))
     noMoreTweet = False
     newFile = False
+    f = False
+
+    searchDate = startDate
+    new_tweets = False
 
     while not noMoreTweet:
         try:
             if (not sinceId):
-                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=endDate.format('YYYY-MM-DD'))
+                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDate.format('YYYY-MM-DD'))
             else:
-                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=endDate.format('YYYY-MM-DD'), since_id=sinceId)
+                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDate.format('YYYY-MM-DD'), since_id=sinceId)
 
             if not new_tweets:
+                if (searchDate.datetime < endDate):
+                    searchDate = searchDate + timedelta(days=1)
+                    print("Downloading for date {0}".format(searchDate.format('YYYY-MM-DD')))
+                    continue
+
                 print("No more tweets found")
                 noMoreTweet = True
                 break
@@ -93,7 +104,7 @@ if __name__ == '__main__':
                 fName = createdAt.strftime('%Y-%m-%d')
                 if (not os.path.isfile(fName)):
                     # close previous file
-                    if (not f and not f.closed):
+                    if (not f and not isinstance(f, (bool)) and not f.closed):
                         f.close()
                     # open new file name to write
                     f = open(fName, 'w')
@@ -111,6 +122,9 @@ if __name__ == '__main__':
             # Just exit if any error
             print("some error : " + str(e))
             noMoreTweet = True
+
+            if (not f and not f.closed):
+                f.close()
 
             break
 
