@@ -1,6 +1,7 @@
 import tweepy
 from tweepy import Stream
-from tweepy import OAuthHandler
+# from tweepy import OAuthHandler
+from tweepy import AppAuthHandler
 from datetime import timedelta
 
 from tweepy.streaming import StreamListener
@@ -53,9 +54,9 @@ if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
 
-    auth = OAuthHandler(config.consumer_key, config.consumer_secret)
-    auth.set_access_token(config.access_token, config.access_secret)
-    api = tweepy.API(auth)
+    auth = AppAuthHandler(config.consumer_key, config.consumer_secret)
+    #auth.set_access_token(config.access_token, config.access_secret)
+    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
     #collecting data
     searchQuery = '#' + args.keywords  # this is what we're searching for
     tweetsPerQry = 100  # this is the max the API permits
@@ -65,6 +66,8 @@ if __name__ == '__main__':
     # else default to no lower limit, go as far back as API allows
     sinceId = None
 
+    args.startDate = "2017-09-01"
+    args.endDate = "2017-09-01"
 
     startDate = arrow.get(args.startDate, 'YYYY-MM-DD').replace(tzinfo='local')
     endDate = arrow.get(args.endDate, 'YYYY-MM-DD').replace(tzinfo='local')
@@ -75,18 +78,21 @@ if __name__ == '__main__':
     newFile = False
     f = False
 
-    searchDate = startDate
+    # search until this searchDate but not include the searchDate
+    searchDate = startDate + timedelta(days=1)
     new_tweets = False
 
     while not noMoreTweet:
         try:
+            searchDateStr = searchDate.format('YYYY-MM-DD')
+
             if (not sinceId):
-                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDate.format('YYYY-MM-DD'))
+                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDateStr)
             else:
-                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDate.format('YYYY-MM-DD'), since_id=sinceId)
+                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDateStr, since_id=sinceId)
 
             if not new_tweets:
-                if (searchDate.datetime < endDate):
+                if (searchDate.datetime <= endDate):
                     searchDate = searchDate + timedelta(days=1)
                     print("Downloading for date {0}".format(searchDate.format('YYYY-MM-DD')))
                     continue
@@ -99,6 +105,8 @@ if __name__ == '__main__':
                 createdAt = pytz.utc.localize(tweet.created_at)
                 if (createdAt < startDate.datetime):
                     noMoreTweet = True
+                    # ignore tweet that created not in range (startDate to searchDate)
+                    # the sinceId is lower bound to avoid getting duplicate tweets when searching tweets in more recent dates
                     break
 
                 fName = createdAt.strftime('%Y-%m-%d')
