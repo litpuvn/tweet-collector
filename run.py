@@ -75,7 +75,7 @@ if __name__ == '__main__':
     #auth.set_access_token(config.access_token, config.access_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
     #collecting data
-    if args.hash and args.hash.lower() in ["true", "yes", "y", "1", "t"]:
+    if args.hash is not None and args.hash.lower() in ["true", "yes", "y", "1", "t"]:
         searchQuery = '#' + args.keywords  # this is what we're searching for
     else:
         searchQuery = args.keywords
@@ -156,7 +156,7 @@ if __name__ == '__main__':
             print("some error : " + str(e))
             noMoreTweet = True
 
-            if (not f and not f.closed):
+            if f is not None and not f.closed:
                 f.close()
 
             break
