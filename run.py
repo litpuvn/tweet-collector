@@ -109,7 +109,7 @@ if __name__ == '__main__':
     while not noMoreTweet:
         try:
             searchDateStr = searchDate.format('YYYY-MM-DD')
-            actualTweetDate = startDate - timedelta(days=1)
+            actualTweetDate = searchDate - timedelta(days=1)
             print("Downloading for date {0}".format(actualTweetDate.format('YYYY-MM-DD')))
 
             if (not sinceId):
