@@ -24,6 +24,12 @@ def get_parser():
                         help="Keywords to filter",
                         default='harvey')
 
+    parser.add_argument("-h",
+                        "--hash",
+                        dest="hash",
+                        help="add hash",
+                        default="True")
+
     lastSevenDay = datetime.strftime(datetime.now() - timedelta(7), '%Y-%m-%d')
     yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
 
@@ -69,7 +75,11 @@ if __name__ == '__main__':
     #auth.set_access_token(config.access_token, config.access_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
     #collecting data
-    searchQuery = '#' + args.keywords  # this is what we're searching for
+    if args.hash and args.hash.tolower() in ["true", "yes"]:
+        searchQuery = '#' + args.keywords  # this is what we're searching for
+    else:
+        searchQuery = args.keywords
+
     tweetsPerQry = 100  # this is the max the API permits
     fName = 'tweets.txt'  # We'll store the tweets in a text file.
 
@@ -99,6 +109,8 @@ if __name__ == '__main__':
     while not noMoreTweet:
         try:
             searchDateStr = searchDate.format('YYYY-MM-DD')
+            actualTweetDate = startDate - timedelta(days=1)
+            print("Downloading for date {0}".format(actualTweetDate.format('YYYY-MM-DD')))
 
             if (not sinceId):
                 new_tweets = api.search(q=searchQuery, count=tweetsPerQry, until=searchDateStr)
@@ -108,7 +120,6 @@ if __name__ == '__main__':
             if not new_tweets:
                 if (searchDate.datetime <= endDate):
                     searchDate = searchDate + timedelta(days=1)
-                    print("Downloading for date {0}".format(searchDate.format('YYYY-MM-DD')))
                     continue
 
                 print("No more tweets found")
