@@ -24,10 +24,10 @@ def get_parser():
                         help="Keywords to filter",
                         default='harvey')
 
-    parser.add_argument("-h",
-                        "--hash",
+    parser.add_argument("-t",
+                        "--hashTag",
                         dest="hash",
-                        help="add hash",
+                        help="add hash tag to keyword",
                         default="True")
 
     lastSevenDay = datetime.strftime(datetime.now() - timedelta(7), '%Y-%m-%d')
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     #auth.set_access_token(config.access_token, config.access_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
     #collecting data
-    if args.hash and args.hash.tolower() in ["true", "yes"]:
+    if args.hash and args.hash.lower() in ["true", "yes", "y", "1", "t"]:
         searchQuery = '#' + args.keywords  # this is what we're searching for
     else:
         searchQuery = args.keywords
