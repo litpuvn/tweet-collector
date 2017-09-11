@@ -41,6 +41,13 @@ def get_parser():
                         help="Output folder",
                         default= os.getcwd()
                         )
+
+    parser.add_argument("-p",
+                        "--prefix",
+                        dest="prefix",
+                        help="Output file prefix name",
+                        default= ""
+                        )
     return parser
 
 
@@ -69,6 +76,7 @@ if __name__ == '__main__':
     startDate = arrow.get(args.startDate, 'YYYY-MM-DD').replace(tzinfo='local')
     endDate = arrow.get(args.endDate, 'YYYY-MM-DD').replace(tzinfo='local')
 
+    outputPrefix = args.prefix
     tweetCount = 0
     print("Downloading tweets from {0} to {1} with keyword {2}".format(args.startDate, args.endDate, args.keywords ))
     noMoreTweet = False
@@ -106,7 +114,7 @@ if __name__ == '__main__':
                     # the sinceId is lower bound to avoid getting duplicate tweets when searching tweets in more recent dates
                     break
 
-                fName = createdAt.strftime('%Y-%m-%d') + ".json"
+                fName = outputPrefix + "-" + createdAt.strftime('%Y-%m-%d') + ".json"
                 if (not os.path.isfile(fName)):
                     # close previous file
                     if (not f and not isinstance(f, (bool)) and not f.closed):
