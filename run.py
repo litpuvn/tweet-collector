@@ -2,7 +2,7 @@ import tweepy
 from tweepy import Stream
 # from tweepy import OAuthHandler
 from tweepy import AppAuthHandler
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from tweepy.streaming import StreamListener
 import time
@@ -23,17 +23,21 @@ def get_parser():
                         dest="keywords",
                         help="Keywords to filter",
                         default='harvey')
+
+    lastSevenDay = datetime.strftime(datetime.now() - timedelta(7), '%Y-%m-%d')
+    yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
+
     parser.add_argument("-s",
                         "--startDate",
                         dest="startDate",
                         help="Minimum date (YYYY-MM-DD) that the tweets were created",
-                        default= '2017-08-26')
+                        default=lastSevenDay)
 
     parser.add_argument("-e",
                         "--endDate",
                         dest="endDate",
                         help="Maximum date (YYYY-MM-DD) that the tweets were created",
-                        default= '2017-09-08')
+                        default=yesterday)
 
     parser.add_argument("-o",
                         "--output",
@@ -77,6 +81,11 @@ if __name__ == '__main__':
     endDate = arrow.get(args.endDate, 'YYYY-MM-DD').replace(tzinfo='local')
 
     outputPrefix = args.prefix
+    rootFolder = args.output + '/' + outputPrefix
+
+    if (outputPrefix and not os.path.isdir(rootFolder)):
+        os.makedirs(rootFolder)
+
     tweetCount = 0
     print("Downloading tweets from {0} to {1} with keyword {2}".format(args.startDate, args.endDate, args.keywords ))
     noMoreTweet = False
