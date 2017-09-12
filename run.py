@@ -134,7 +134,11 @@ if __name__ == '__main__':
                     # the sinceId is lower bound to avoid getting duplicate tweets when searching tweets in more recent dates
                     break
 
-                fName = rootFolder + '/' + outputPrefix + "-" + createdAt.strftime('%Y-%m-%d') + ".json"
+                if outputPrefix == "":
+                    fName = rootFolder + '/' + createdAt.strftime('%Y-%m-%d') + ".json"
+                else:
+                    fName = rootFolder + '/' + outputPrefix + "-" + createdAt.strftime('%Y-%m-%d') + ".json"
+
                 if (not os.path.isfile(fName)):
                     # close previous file
                     if (not f and not isinstance(f, (bool)) and not f.closed):
