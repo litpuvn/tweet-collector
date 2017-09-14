@@ -12,6 +12,10 @@ https://github.com/tweepy/tweepy
 
 4. Enjoy the command line
 
+## Usage
+``
+python run.py --startDate=YYYY-MM-DD --endDate=YYYY-MM-DD --keyword=your-key-word
+```
 
 ## Reference
 
