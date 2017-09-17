@@ -17,6 +17,11 @@ https://github.com/tweepy/tweepy
 python run.py --startDate=YYYY-MM-DD --endDate=YYYY-MM-DD --keyword=your-key-word
 ```
 
+## Sample Result
+We download tweets related to Harvey storm available at this link:
+
+https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
+
 ## Reference
 
 The code is learnt from this blog
