@@ -22,6 +22,12 @@ We download tweets related to Harvey storm available at this link:
 
 https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 
+## Authors
+
+Long: https://github.com/litpuvn
+
+Yusuf: https://github.com/yusufmurat
+
 ## Reference
 
 The code is learnt from this blog
