@@ -22,6 +22,12 @@ We download tweets related to Harvey storm available at this link:
 
 https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 
+
+## Classifiers to learn from this dataset
+
+https://github.com/litpuvn/harvey-classifier
+
+
 ## Authors
 
 Long: https://github.com/litpuvn
