@@ -14,7 +14,7 @@ def get_parser():
     parser.add_argument("-ln",
                         "--lang",
                         dest="language",
-                        help="Langauge",
+                        help="Language",
                         default="en")
     parser.add_argument("-c",
                         "--country",
@@ -29,7 +29,9 @@ def get_parser():
     parser.add_argument("-d",
                         "--data-dir",
                         dest="data_dir",
-                        help="Output/Data Directory")
+                        help="Output/Data Directory",
+                        default=os.getcwd()
+                        )
     return parser
 
 
