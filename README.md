@@ -32,6 +32,8 @@ https://github.com/litpuvn/harvey-classifier
 
 Long: https://github.com/litpuvn
 
+Joshua: https://github.com/JStuve
+
 Yusuf: https://github.com/yusufmurat
 
 ## Reference
