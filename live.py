@@ -69,7 +69,16 @@ class MyListener(StreamListener):
         return True
 
     def on_error(self, status):
-        print(status)
+        if(status == 401):
+            print("401 - Unauthorized: Missing or incorrect authentication credentials. This may also returned in other undefined circumstances.")
+        elif(status == 400):
+            print("400 - Bad Request: The request was invalid or cannot be otherwise served. An accompanying error message will explain further. Requests without authentication are considered invalid and will yield this response.")
+        elif(status == 403):
+            print("403 - Forbidden: The request is understood, but it has been refused or access is not allowed. An accompanying error message will explain why. This code is used when requests are being denied due to update limits .")
+        elif(status == 429):
+            print("429 - Too Many Requests: Returned when a request cannot be served due to the applications rate limit having been exhausted for the resource.")
+        else:
+            print("Error Code: " + status + ", check README for link to all the codes.")
         return True
     
     '''
@@ -127,5 +136,4 @@ if __name__ == '__main__':
         twitter_stream = Stream(auth, MyListener(args.data_dir))
         twitter_stream.filter(track=[args.query], languages=[args.language], locations=countryCord[args.country])
     except:
-        #Keep on trucking!
         pass

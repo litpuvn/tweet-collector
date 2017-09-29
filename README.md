@@ -28,6 +28,10 @@ https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 https://github.com/litpuvn/harvey-classifier
 
 
+## Twitter Error Return Code
+
+https://developer.twitter.com/en/docs/basics/response-codes
+
 ## Authors
 
 Long: https://github.com/litpuvn
