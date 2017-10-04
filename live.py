@@ -28,7 +28,7 @@ def get_parser():
                         default='-')
     parser.add_argument("-d",
                         "--data-dir",
-                        dest="data_dir",
+                        dest="data",
                         help="Output/Data Directory",
                         default=os.getcwd()
                         )
@@ -69,6 +69,7 @@ class MyListener(StreamListener):
         return True
 
     def on_error(self, status):
+        print(self.curDir)
         if(status == 401):
             print("401 - Unauthorized: Missing or incorrect authentication credentials. This may also returned in other undefined circumstances.")
         elif(status == 400):
