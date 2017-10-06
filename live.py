@@ -1,4 +1,5 @@
 import os
+import sys
 import tweepy
 from tweepy import Stream
 from tweepy import OAuthHandler
@@ -30,7 +31,7 @@ def get_parser():
                         "--data-dir",
                         dest="data",
                         help="Output/Data Directory",
-                        default=os.getcwd()
+                        default= str(os.getcwd() + "/data")
                         )
     return parser
 
@@ -134,7 +135,7 @@ if __name__ == '__main__':
     api = tweepy.API(auth)
 
     try:
-        twitter_stream = Stream(auth, MyListener(args.data_dir))
+        twitter_stream = Stream(auth, MyListener(args.data))
         twitter_stream.filter(track=[args.query], languages=[args.language], locations=countryCord[args.country])
     except:
-        pass
+        print("Error: " + str(sys.exc_info()))
