@@ -46,6 +46,9 @@ class MyListener(StreamListener):
     MAX_SIZE = 1000000000 # 1GB = 1000000000 Max File Size
     endTime = 0
 
+    flushTimer = 60 * 20 #60 * N Minutes (60 * 20 = 20 Minutes)
+    flushEnd = 0
+
     def __init__(self, data_dir):
         #File naming initializers
         self.curDir = data_dir
@@ -53,6 +56,7 @@ class MyListener(StreamListener):
         
         #Timer intializers for console updates
         self.timer_check()
+        self.flush_file()
         
         print("Listening for Tweets...\nStream updates every {} minutes.\nStart Time: {}".format(int(self.timer/60), datetime.datetime.now()))
 
@@ -63,6 +67,7 @@ class MyListener(StreamListener):
                 f.write(data)
                 self.tweetCount = self.tweetCount + 1
                 self.timer_check()
+                self.flush_file()
                 return True
         except BaseException as e:
             print("Error on_data: %s" % str(e))
@@ -105,7 +110,21 @@ class MyListener(StreamListener):
                     self.fileNumber = self.fileNumber + 1
                     print("New File Created: {}_{}.json".format(self.currentDay, self.fileNumber))
             self.outfile = "{}/{}_{}.json".format(data_dir, self.currentDay, self.fileNumber)
+
+    '''
+    Flushes the file that is currently being written to every flushTimer minutes.
     
+    FlushTimer is declared above current set to 20 minutes
+    '''
+    def flush_file(self):
+        if(time.time() > self.flushEnd):
+            with open(self.outfile, 'a') as f:
+                f.flush()  # Flushes the internal buffer.
+                f.close()
+            self.flushStart = time.time()
+            self.flushEnd = self.flushStart + self.flushTimer
+        return
+
     '''
     Admin use only. 
     Main purpose of this function is to display updates to the user to notify
@@ -116,8 +135,9 @@ class MyListener(StreamListener):
             print("{} Tweets, recorded at {}".format(self.tweetCount, datetime.datetime.now()))
             self.startTime = time.time()
             self.endTime = self.startTime + self.timer
-            self.tweetCount = 0 
+            self.tweetCount = 0
         return
+
 
 if __name__ == '__main__':
     US = [-130.42,27.2,-59.33,49.68,-158.9,15.7,-151.5,22.3,-169.3,54.6,-141.0,71.4]
