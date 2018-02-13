@@ -39,10 +39,10 @@ def get_parser():
 
 def getFreqTerms(path, sw,fc):
     files = os.listdir(path)
-    print(files)
     freq = Counter()
     for file in files:
         if file.endswith('json'):
+            print("Processing {}. This may take awhile...".format(file))
             with open(path+file) as f:
                 tweets = f.readlines()
                 for tweet in tweets:
@@ -70,8 +70,8 @@ if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
 
-    print(args.dir)
-    print(args.sw.split(','))
-    print(args.fc)
+    print("\nIgnoring words: {}".format(args.sw))
+    print("Displaying the top {} most frequent words".format(args.fc))
+    print("Pulling files from {}\n".format(os.getcwd() + '\\' + args.dir))
 
     getFreqTerms('./' + args.dir,args.sw.split(','),args.fc)
