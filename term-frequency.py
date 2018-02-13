@@ -17,7 +17,7 @@ def get_parser():
         "--dir",
         dest="dir",
         help="Directory of input files",
-        default='./'
+        default=''
     )
 
     parser.add_argument(
@@ -39,10 +39,11 @@ def get_parser():
 
 def getFreqTerms(path, sw,fc):
     files = os.listdir(path)
+    print(files)
     freq = Counter()
     for file in files:
         if file.endswith('json'):
-            with open(file) as f:
+            with open(path+file) as f:
                 tweets = f.readlines()
                 for tweet in tweets:
                     tweetObj = json.loads(tweet)
@@ -73,4 +74,4 @@ if __name__ == '__main__':
     print(args.sw.split(','))
     print(args.fc)
 
-    getFreqTerms('./',args.sw.split(','),args.fc)
+    getFreqTerms('./' + args.dir,args.sw.split(','),args.fc)

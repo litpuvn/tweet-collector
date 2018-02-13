@@ -22,6 +22,27 @@ We download tweets related to Harvey storm available at this link:
 
 https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 
+## Command line tool calculate term frequency from the twitter data 
+
+* **term-frequency.py** calculator looks for *.json* files that are output by **run.py**
+* This program only outputs command line information, so take note of the console output
+
+### Commands
+
+**Directory:** `-d | --dir` will allow the program to know where the *.json* files are located. Folder/Files must be in the tweet-collector root
+
+**Stopwords:** `-sw | --stopwords` will block any additional words that you want to remove from the frequency calculator
+
+**Frequency Count:** `-fc | --frewCount` will set the N number up terms that will be displayed 
+
+```
+python term-frequency.py --dir=output/ --stopwords=opioid,rt,day,calm --freqCount=3
+
+addiction       1045
+epidemic        987
+overdose        665
+```
+
 
 ## Classifiers to learn from this dataset
 
