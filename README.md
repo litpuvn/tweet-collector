@@ -33,7 +33,7 @@ https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 
 **Stopwords:** `-sw | --stopwords` will block any additional words that you want to remove from the frequency calculator
 
-**Frequency Count:** `-fc | --frewCount` will set the N number up terms that will be displayed 
+**Frequency Count:** `-fc | --freqCount` will set the N number up terms that will be displayed 
 
 ```
 python term-frequency.py --dir=output/ --stopwords=opioid,rt,day,calm --freqCount=3
