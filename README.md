@@ -43,6 +43,14 @@ epidemic        987
 overdose        665
 ```
 
+## Command line tool to pull twitter user histories using twitter screennames
+
+## Usage
+```
+python user_tweet.py --screenname=user1,user2,user3
+```
+One or more screennames are required to run the above line of code (if inputting more than 1 screenname, seperate each screenname with a single comma). Output is a .csv file for each screenname, in the format "screenname_tweets.csv".
+
 
 ## Classifiers to learn from this dataset
 
@@ -68,6 +76,8 @@ Long: https://github.com/litpuvn
 Joshua: https://github.com/JStuve
 
 Yusuf: https://github.com/yusufmurat
+
+Christopher: https://github.com/3dchristopher
 
 ## Reference
 
