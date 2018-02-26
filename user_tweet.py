@@ -21,7 +21,7 @@ def get_parser():
                         "--screenname",
                         dest="screenName",
                         help="Username(s) of a twitter account",
-                        default='twdb')
+                        default=None)
 
     return parser
 
@@ -29,8 +29,9 @@ def write_tweets_to_file(screen_name, tweets):
     # write the csv
     with open('%s_tweets.csv' % screen_name, 'wb') as f:
         writer = csv.writer(f)
-        writer.writerow(["id", "created_at", "text"])
-        writer.writerows([tweets])
+        #writer.writerow(["id", "created_at", "text"])
+        for tweet in tweets:
+            writer.writerow([tweet])
     pass
 
 def get_all_tweets(screen_name, api):
@@ -70,13 +71,16 @@ def get_all_tweets(screen_name, api):
 if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
-    screenNameList = args.screenName.split(",")
-    
-    auth = AppAuthHandler(config.consumer_key, config.consumer_secret)
-    # auth.set_access_token(config.access_token, config.access_secret)
-    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-    # pass in the username of the account you want to download
-    for name in screenNameList:
-        print "Screen Name: {}".format(name)
-        get_all_tweets(name, api)
-        print
+    if args.screenName==None:
+        print("Error: No screenname provided. Please include a screenname to pull tweets from (Usage is as follows: --screenname=user1,user2). See README.md for more info.")
+    else:
+        screenNameList = args.screenName.split(",")
+        
+        auth = AppAuthHandler(config.consumer_key, config.consumer_secret)
+        # auth.set_access_token(config.access_token, config.access_secret)
+        api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+        # pass in the username of the account you want to download
+        for name in screenNameList:
+            print "Screen Name: {}".format(name)
+            get_all_tweets(name, api)
+            print
