@@ -49,7 +49,7 @@ overdose        665
 ```
 python user_tweet.py --screenname=user1,user2,user3
 ```
-One or more screennames are required to run the above line of code (if inputting more than 1 screenname, seperate each screenname with a single comma). Output is a .csv file for each screenname, in the format "screenname_tweets.csv".
+One or more screennames are required to run the above line of code (if inputting more than 1 screenname, seperate each screenname with a single comma). Output is a .json file for each screenname, in the format "screenname_tweets.json".
 
 
 ## Classifiers to learn from this dataset
