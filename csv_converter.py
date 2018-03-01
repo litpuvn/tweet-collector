@@ -19,6 +19,19 @@ def get_parser():
 
     return parser
 
+def jsonR(r, i, t):
+    try:
+        hold = r[t[i]]
+    except TypeError:
+        hold=[]
+        for s in r:
+            hold.append(s[t[i]])
+
+    if len(t)-1>i:
+        i+=1
+        hold = jsonR(hold, i, t)
+    return hold
+
 if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
@@ -34,15 +47,19 @@ if __name__ == '__main__':
                     reader = json.loads(line)#, fieldnames="text")
                     lineAdd = []
                     for t in a:
-                        hold = reader[t]
-                        if t == "text":
-                            txt = ''.join((hold)).encode('utf-8').strip()
-                        else:
-                            txt = hold
-                        txt = str(txt).decode('unicode_escape').encode('ascii','ignore')
+                        t = t.split('.')
+                        hold =jsonR(reader, 0, t)
+                        try:
+                            hold = ''.join((hold)).encode('utf-8').strip()
+                        except TypeError, te:
+                            pass
+                        #hold = ''.join((hold)).encode('utf-8').strip()
+                        txt = str(hold).decode('unicode_escape').encode('ascii','ignore')
                         txt = txt.replace("\n", "").replace("\r", "").replace("\t","")
                         txt = re.sub(' +', ' ', txt)
                         txt = txt.replace('\.+','.')
                         lineAdd.append(txt)
                     writer.writerow({a[i]: lineAdd[i] for i in range(len(lineAdd))})
+
+
 
