@@ -7,6 +7,7 @@ import argparse
 import os
 from tweepy import AppAuthHandler
 import config
+import json
 
 # Twitter API credentials
 consumer_key = config.consumer_key
@@ -27,11 +28,9 @@ def get_parser():
 
 def write_tweets_to_file(screen_name, tweets):
     # write the csv
-    with open('%s_tweets.csv' % screen_name, 'wb') as f:
-        writer = csv.writer(f)
-        #writer.writerow(["id", "created_at", "text"])
+    with open('%s_tweets.json' % screen_name, 'wb') as f:
         for tweet in tweets:
-            writer.writerow([tweet])
+            f.write(json.dumps(tweet._json)+"\n")
     pass
 
 def get_all_tweets(screen_name, api):
