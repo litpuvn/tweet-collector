@@ -43,9 +43,13 @@ epidemic        987
 overdose        665
 ```
 
-## Command line tool to pull twitter user histories using twitter screennames
+## Command line tool to pull twitter user histories - user_tweet.py
+The purpose of this program is to retrieve a twitter user's tweet history, outputting it to a JSON file format. Below are instructions for the use of this program
 
-## Usage
+## Commands
+**Twitter Screenname** `-s | --screenname` allows the user to input the user(s) to retrieve tweet history(s) from.
+
+## Execution
 ```
 python user_tweet.py --screenname=user1,user2,user3
 ```
