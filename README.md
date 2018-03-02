@@ -51,6 +51,20 @@ python user_tweet.py --screenname=user1,user2,user3
 ```
 One or more screennames are required to run the above line of code (if inputting more than 1 screenname, seperate each screenname with a single comma). Output is a .json file for each screenname, in the format "screenname_tweets.json".
 
+## JSON to CSV Converter
+The purpose of this program is to take a JSON file of tweets and select the desired attributes to transfer over into a CSV file format.
+Below are instructions for the use of this program
+
+## Commands
+**Input File Name** `-i | --inputfile ` allows the user to indicate what JSON file to pass into the program. Only accepts a single input file.
+**Attributes** `-a | --attributes` allows the user to indicate the desired attributes they want to pull from the JSON file. Default attributes are: id, text, created_at, place, coordinates. For a list of all possible attributes, see tweet_parts.txt.
+
+## Execution
+```
+python csv_converter.py -i user1 -a entities.hashtags.text,text,lang
+
+```
+The above command takes the file 'user1.json' as input, and outputs the tweet body text, language, and hashtag text in CSV format with the name 'user1.csv'.
 
 ## Classifiers to learn from this dataset
 
