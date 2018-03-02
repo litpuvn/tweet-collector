@@ -56,7 +56,8 @@ The purpose of this program is to take a JSON file of tweets and select the desi
 Below are instructions for the use of this program
 
 ## Commands
-**Input File Name** `-i | --inputfile ` allows the user to indicate what JSON file to pass into the program. Only accepts a single input file.
+**Input File Name** `-i | --inputfile ` allows the user to indicate what JSON file to input. Only accepts a single input file.
+
 **Attributes** `-a | --attributes` allows the user to indicate the desired attributes they want to pull from the JSON file. Default attributes are: id, text, created_at, place, coordinates. For a list of all possible attributes, see tweet_parts.txt.
 
 ## Execution
