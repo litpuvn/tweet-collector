@@ -51,7 +51,7 @@ python user_tweet.py --screenname=user1,user2,user3
 ```
 One or more screennames are required to run the above line of code (if inputting more than 1 screenname, seperate each screenname with a single comma). Output is a .json file for each screenname, in the format "screenname_tweets.json".
 
-## JSON to CSV Converter
+## JSON to CSV Converter - csv_converter.py
 The purpose of this program is to take a JSON file of tweets and select the desired attributes to transfer over into a CSV file format.
 Below are instructions for the use of this program
 
