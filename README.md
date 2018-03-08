@@ -48,8 +48,8 @@ The purpose of this program is to retrieve a twitter user's tweet history, outpu
 
 ## Commands
 **Twitter Screenname** `-s | --screenname` allows the user to input the user(s) to retrieve tweet history(s) from.
-**From Date** `-f | --fromDate` allows the user to specify that they want to retrieve tweets on and after the selected date.
-**Until Date** `-u | --untilDate` allows the user to specify that they want to retrieve tweets on and before the selected date.
+**From Date** `-f | --fromDate` allows the user to specify that they want to retrieve tweets on and after the selected date.  
+**Until Date** `-u | --untilDate` allows the user to specify that they want to retrieve tweets on and before the selected date.  
 
 ## Execution
 ```
