@@ -55,7 +55,7 @@ The purpose of this program is to retrieve a twitter user's tweet history, outpu
 
 ## Execution
 ```
-python user_tweet.py --screenname=user1,user2,user3 --fromDate=02Feb2018 --endDate=04Feb2018
+python user_tweet.py --screenname=user1,user2,user3 --fromDate=02Feb2018 --untilDate=04Feb2018
 ```
 One or more screennames are required to run the above line of code (if inputting more than 1 screenname, seperate each screenname with a single comma). Dates must be given in the format: **DDMMMYYYY**, where **DD** is the two digit day, **MMM** is the abbreviation of the month name (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sept, Oct, Nov, or Dec), and **YYYY** is the four digit year. Output is a .json file for each screenname, in the format "screenname_tweets.json".
 
