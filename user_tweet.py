@@ -28,12 +28,12 @@ def get_parser():
     parser.add_argument("-f",
                         "--fromDate",
                         dest="start",
-                        help="Specifies only tweets during and after selected date",
+                        help="Specifies only tweets after selected date",
                         default=None)
     parser.add_argument("-u",
                         "--untilDate",
                         dest="end",
-                        help="Specifies only tweets during and before selected date",
+                        help="Specifies only tweets before selected date",
                         default=None)
 
     return parser
@@ -52,28 +52,28 @@ def time_check(alltweets, new_tweets, start, end, fTweet):
         inRangeS = False
         inRangeE = False
         if start != None:
-            if (start-tweet.created_at).days < 0:
+            if (start-tweet.created_at).days < 0: # If tweet was created on or after the start date, True
                 inRangeS = True
         else:
             inRangeS = True
 
         if end != None:
-            if (tweet.created_at-end).days < 1:
+            if (tweet.created_at-end).days < 1: # If tweet was created on or before the end date, True
                 inRangeE = True
         else:
             inRangeE = True
 
         if inRangeE==True:
-            if inRangeS==True:
-                newT=True
-                fTweet=True
+            if inRangeS==True: # If tweet is within the given range, save for output
+                newT=True # Indicates that a tweet in the date range was found in the batch of tweets
+                fTweet=True # Indicates that a tweet in the date range was found
                 inRangeTweets.append(tweet)
     alltweets.extend(inRangeTweets)
     return newT, fTweet
 
 def endCheck(newTweetFound, anyTweetFound):
     if newTweetFound==False:
-            if anyTweetFound==True:
+            if anyTweetFound==True: # If tweets were found in the date range, and you didn't find any new tweets to add in the last group of tweets, then there are no more tweets in the date range to grab
                 return True
     return False
 
@@ -87,8 +87,6 @@ def get_all_tweets(screen_name, api, start, end):
     # make initial request for most recent tweets (200 is the maximum allowed count)
     new_tweets = api.user_timeline(screen_name=screen_name, count=200)
 
-    # save most recent tweets
-    #alltweets.extend(new_tweets)
     newTweetFound, anyTweetFound = time_check(alltweets, new_tweets, start, end, anyTweetFound)
 
     # save the id of the oldest tweet less one
@@ -110,11 +108,12 @@ def get_all_tweets(screen_name, api, start, end):
         newTweetFound, anyTweetFound = time_check(alltweets, new_tweets, start, end, anyTweetFound)
         if endCheck(newTweetFound, anyTweetFound):
             break
-        #alltweets.extend(inRangeTweets)
 
         # update the id of the oldest tweet less one
         if alltweets != []:
             oldest = alltweets[-1].id - 1
+        else:
+            oldest = new_tweets[-1].id - 1
 
         print "...%s tweets downloaded so far" % (len(alltweets))
 
@@ -142,10 +141,12 @@ if __name__ == '__main__':
             sys.exit(1)
     else:
         eDate = None
-
-    if (sDate-eDate).days > 0:
-        print("Error: Incorrect Date range. Please write the earliest date you wish to collect tweets in the '--fromDate' field, and the latest date you wish to collect tweets from in the '--untilDate' field.")
-        sys.exit(1)
+        
+    if sDate != None:
+        if eDate != None:
+            if (sDate-eDate).days > 0:
+                print("Error: Incorrect Date range. Please write the earliest date you wish to collect tweets in the '--fromDate' field, and the latest date you wish to collect tweets from in the '--untilDate' field.")
+                sys.exit(1)
 
     if args.screenName==None:
         print("Error: No screenname provided. Please include a screenname to pull tweets from (Usage is as follows: --screenname=user1,user2). See README.md for more info.")
