@@ -92,7 +92,10 @@ def get_all_tweets(screen_name, api, start, end):
     newTweetFound, anyTweetFound = time_check(alltweets, new_tweets, start, end, anyTweetFound)
 
     # save the id of the oldest tweet less one
-    oldest = alltweets[-1].id - 1
+    if alltweets != []:
+        oldest = alltweets[-1].id - 1
+    else:
+        oldest = new_tweets[-1].id - 1
 
     # keep grabbing tweets until there are no tweets left to grab
     while len(new_tweets) > 0:
@@ -110,7 +113,8 @@ def get_all_tweets(screen_name, api, start, end):
         #alltweets.extend(inRangeTweets)
 
         # update the id of the oldest tweet less one
-        oldest = alltweets[-1].id - 1
+        if alltweets != []:
+            oldest = alltweets[-1].id - 1
 
         print "...%s tweets downloaded so far" % (len(alltweets))
 
@@ -138,6 +142,10 @@ if __name__ == '__main__':
             sys.exit(1)
     else:
         eDate = None
+
+    if (sDate-eDate).days > 0:
+        print("Error: Incorrect Date range. Please write the earliest date you wish to collect tweets in the '--fromDate' field, and the latest date you wish to collect tweets from in the '--untilDate' field.")
+        sys.exit(1)
 
     if args.screenName==None:
         print("Error: No screenname provided. Please include a screenname to pull tweets from (Usage is as follows: --screenname=user1,user2). See README.md for more info.")
