@@ -8,6 +8,8 @@ import os
 from tweepy import AppAuthHandler
 import config
 import json
+import datetime
+import sys
 
 # Twitter API credentials
 consumer_key = config.consumer_key
@@ -23,6 +25,16 @@ def get_parser():
                         dest="screenName",
                         help="Username(s) of a twitter account",
                         default=None)
+    parser.add_argument("-f",
+                        "--fromDate",
+                        dest="start",
+                        help="Specifies only tweets after selected date",
+                        default=None)
+    parser.add_argument("-u",
+                        "--untilDate",
+                        dest="end",
+                        help="Specifies only tweets before selected date",
+                        default=None)
 
     return parser
 
@@ -33,30 +45,69 @@ def write_tweets_to_file(screen_name, tweets):
             f.write(json.dumps(tweet._json)+"\n")
     pass
 
-def get_all_tweets(screen_name, api):
+def time_check(alltweets, new_tweets, start, end, fTweet):
+    newT = False
+    inRangeTweets = []
+    for tweet in new_tweets:
+        inRangeS = False
+        inRangeE = False
+        if start != None:
+            if (start-tweet.created_at).days < 0:
+                inRangeS = True
+        else:
+            inRangeS = True
+
+        if end != None:
+            if (tweet.created_at-end).days < 1:
+                inRangeE = True
+        else:
+            inRangeE = True
+
+        if inRangeE==True:
+            if inRangeS==True:
+                newT=True
+                fTweet=True
+                inRangeTweets.append(tweet)
+    alltweets.extend(inRangeTweets)
+    return newT, fTweet
+
+def endCheck(newTweetFound, anyTweetFound):
+    if newTweetFound==False:
+            if anyTweetFound==True:
+                return True
+    return False
+
+def get_all_tweets(screen_name, api, start, end):
     # Twitter only allows access to a users most recent 3240 tweets with this method
 
     # initialize a list to hold all the tweepy Tweets
     alltweets = []
 
+    anyTweetFound = False
     # make initial request for most recent tweets (200 is the maximum allowed count)
     new_tweets = api.user_timeline(screen_name=screen_name, count=200)
 
     # save most recent tweets
-    alltweets.extend(new_tweets)
+    #alltweets.extend(new_tweets)
+    newTweetFound, anyTweetFound = time_check(alltweets, new_tweets, start, end, anyTweetFound)
 
     # save the id of the oldest tweet less one
     oldest = alltweets[-1].id - 1
 
     # keep grabbing tweets until there are no tweets left to grab
     while len(new_tweets) > 0:
-        print "getting tweets before %s" % (oldest)
+        if endCheck(newTweetFound, anyTweetFound):
+            break
+        print "getting tweets before '%s'" % (oldest)
 
         # all subsiquent requests use the max_id param to prevent duplicates
-        new_tweets = api.user_timeline(screen_name=screen_name, count=200, max_id=oldest)
+        new_tweets = api.user_timeline(screen_name=screen_name, count=200, max_id=oldest, since_id=start)
         #write_tweets_to_file(screen_name, new_tweets)
         # # save most recent tweets
-        alltweets.extend(new_tweets)
+        newTweetFound, anyTweetFound = time_check(alltweets, new_tweets, start, end, anyTweetFound)
+        if endCheck(newTweetFound, anyTweetFound):
+            break
+        #alltweets.extend(inRangeTweets)
 
         # update the id of the oldest tweet less one
         oldest = alltweets[-1].id - 1
@@ -70,6 +121,24 @@ def get_all_tweets(screen_name, api):
 if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
+    if args.start != None:
+        try:
+            sDate = datetime.datetime.strptime(args.start, '%d%b%Y')
+        except ValueError:
+            print("Error: Incorrect Date format: fromDate. Please input a valid date in the format: DDMMYYY")
+            sys.exit(1)
+    else:
+        sDate = None
+
+    if args.end != None:
+        try:
+            eDate = datetime.datetime.strptime(args.end, '%d%b%Y')
+        except ValueError:
+            print("Error: Incorrect Date format: untilDate. Please input a valid date in the format: DDMMYYY")
+            sys.exit(1)
+    else:
+        eDate = None
+
     if args.screenName==None:
         print("Error: No screenname provided. Please include a screenname to pull tweets from (Usage is as follows: --screenname=user1,user2). See README.md for more info.")
     else:
@@ -81,5 +150,5 @@ if __name__ == '__main__':
         # pass in the username of the account you want to download
         for name in screenNameList:
             print "Screen Name: {}".format(name)
-            get_all_tweets(name, api)
+            get_all_tweets(name, api, sDate, eDate)
             print
