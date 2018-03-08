@@ -28,12 +28,12 @@ def get_parser():
     parser.add_argument("-f",
                         "--fromDate",
                         dest="start",
-                        help="Specifies only tweets after selected date",
+                        help="Specifies only tweets during and after selected date",
                         default=None)
     parser.add_argument("-u",
                         "--untilDate",
                         dest="end",
-                        help="Specifies only tweets before selected date",
+                        help="Specifies only tweets during and before selected date",
                         default=None)
 
     return parser
