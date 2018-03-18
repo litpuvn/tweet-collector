@@ -49,16 +49,24 @@ if __name__ == '__main__':
                     for t in a:
                         t = t.split('.')
                         hold =jsonR(reader, 0, t)
+                        save = 0
                         try:
-                            hold = ''.join((hold)).encode('utf-8').strip()
-                        except TypeError, te:
+                            if str(hold)[0]=='{':
+                                lineAdd.append(hold)
+                                save = 1
+                        except:
                             pass
-                        #hold = ''.join((hold)).encode('utf-8').strip()
-                        txt = str(hold).decode('unicode_escape').encode('ascii','ignore')
-                        txt = txt.replace("\n", "").replace("\r", "").replace("\t","")
-                        txt = re.sub(' +', ' ', txt)
-                        txt = txt.replace('\.+','.')
-                        lineAdd.append(txt)
+                        if save == 0:
+                            try:
+                                hold = ''.join((hold)).encode('utf-8').strip()
+                            except TypeError:
+                                pass
+                            #hold = ''.join((hold)).encode('utf-8').strip()
+                            txt = str(hold).decode('unicode_escape').encode('ascii','ignore')
+                            txt = txt.replace("\n", "").replace("\r", "").replace("\t","")
+                            txt = re.sub(' +', ' ', txt)
+                            txt = txt.replace('\.+','.')
+                            lineAdd.append(txt)
                     writer.writerow({a[i]: lineAdd[i] for i in range(len(lineAdd))})
 
 
