@@ -90,7 +90,7 @@ https://developer.twitter.com/en/docs/basics/response-codes
 
 **Tweet Object Documentation:** https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object
 
-*Note: There are various kinds of coordinates. 'place', 'coordinates', 'geo'. Place has the capability of telling us where the tweet came from, giving us 4 sets of coordinates that represent a box however it does not neccessarly mean the tweet came from there. Goe is not longer be supported by Twitter. Coordinates, if not null, is the point location of where the tweet came from. Use coordinates, else use place.*
+*Note: There are various kinds of coordinates. 'place', 'coordinates', 'geo'. Place has the capability of telling us where the tweet came from, giving us 4 sets of coordinates that represent a box however it does not neccessarly mean the tweet came from there. Geo is not longer be supported by Twitter. Coordinates, if not null, is the point location of where the tweet came from. Use coordinates, else use place.*
 
 ## Authors
 
