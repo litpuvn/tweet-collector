@@ -1,4 +1,4 @@
-## Command line tool to collect tweets data by keywords and date range
+## Command line tool to collect tweets data by keywords and date range - run.py
 
 1. Make sure you have python installed and import tweepy package.
 
@@ -12,17 +12,17 @@ https://github.com/tweepy/tweepy
 
 4. Enjoy the command line
 
-## Usage
+### Usage
 ```
 python run.py --startDate=YYYY-MM-DD --endDate=YYYY-MM-DD --keyword=your-key-word
 ```
 
-## Sample Result
+### Sample Result
 We download tweets related to Harvey storm available at this link:
 
 https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 
-## Command line tool to calculate term frequency from the twitter data 
+### Command line tool to calculate term frequency from the twitter data 
 
 * **term-frequency.py** calculator looks for *.json* files that are output by **run.py**
 * This program only outputs command line information, so take note of the console output
@@ -46,14 +46,14 @@ overdose        665
 ## Command line tool to pull twitter user histories - user_tweet.py
 The purpose of this program is to retrieve a twitter user's tweet history, outputting it to a JSON file format. Below are instructions for the use of this program
 
-## Commands
+### Commands
 **Twitter Screenname** `-s | --screenname` allows the user to input the user(s) to retrieve tweet history(s) from.
 
 **From Date** `-f | --fromDate` allows the user to specify that they want to retrieve tweets on and after the selected date. 
 
 **Until Date** `-u | --untilDate` allows the user to specify that they want to retrieve tweets on and before the selected date.  
 
-## Execution
+### Execution
 ```
 python user_tweet.py --screenname=user1,user2,user3 --fromDate=02Feb2018 --untilDate=04Feb2018
 ```
@@ -63,12 +63,12 @@ One or more screennames are required to run the above line of code (if inputting
 The purpose of this program is to take a JSON file of tweets and select the desired attributes to transfer over into a CSV file format.
 Below are instructions for the use of this program
 
-## Commands
+### Commands
 **Input File Name** `-i | --inputfile ` allows the user to indicate what JSON file to input. Only accepts a single input file.
 
 **Attributes** `-a | --attributes` allows the user to indicate the desired attributes they want to pull from the JSON file. Default attributes are: id, text, created_at, place, coordinates. **For a list of all possible attributes, see tweet_parts.txt.**
 
-## Execution
+### Execution
 ```
 python csv_converter.py -i user1 -a entities.hashtags.text,text,lang
 
