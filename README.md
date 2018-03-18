@@ -22,7 +22,7 @@ We download tweets related to Harvey storm available at this link:
 
 https://drive.google.com/drive/folders/0Bz0t5Fi0GA75bzNpWVhaSElOOVU
 
-### Command line tool to calculate term frequency from the twitter data 
+## Command line tool to calculate term frequency from the twitter data - term-frequency.py
 
 * **term-frequency.py** calculator looks for *.json* files that are output by **run.py**
 * This program only outputs command line information, so take note of the console output
