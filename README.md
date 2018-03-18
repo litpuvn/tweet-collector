@@ -47,11 +47,11 @@ overdose        665
 The purpose of this program is to retrieve a twitter user's tweet history, outputting it to a JSON file format. Below are instructions for the use of this program
 
 ### Commands
-* **Twitter Screenname** `-s | --screenname` allows the user to input the user(s) to retrieve tweet history(s) from.
+* **Twitter Screenname:** `-s | --screenname` allows the user to input the user(s) to retrieve tweet history(s) from.
 
-* **From Date** `-f | --fromDate` allows the user to specify that they want to retrieve tweets on and after the selected date. 
+* **From Date:** `-f | --fromDate` allows the user to specify that they want to retrieve tweets on and after the selected date. 
 
-* **Until Date** `-u | --untilDate` allows the user to specify that they want to retrieve tweets on and before the selected date.  
+* **Until Date:** `-u | --untilDate` allows the user to specify that they want to retrieve tweets on and before the selected date.  
 
 ### Execution
 ```
@@ -64,9 +64,9 @@ The purpose of this program is to take a JSON file of tweets and select the desi
 Below are instructions for the use of this program
 
 ### Commands
-* **Input File Name** `-i | --inputfile ` allows the user to indicate what JSON file to input. Only accepts a single input file.
+* **Input File Name:** `-i | --inputfile ` allows the user to indicate what JSON file to input. Only accepts a single input file.
 
-* **Attributes** `-a | --attributes` allows the user to indicate the desired attributes they want to pull from the JSON file. Default attributes are: id, text, created_at, place, coordinates. **For a list of all possible attributes, see tweet_parts.txt.**
+* **Attributes:** `-a | --attributes` allows the user to indicate the desired attributes they want to pull from the JSON file. Default attributes are: id, text, created_at, place, coordinates. **For a list of all possible attributes, see tweet_parts.txt.**
 
 ### Execution
 ```
