@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import sys
 import tweepy
@@ -140,6 +141,10 @@ class MyListener(StreamListener):
 
 
 if __name__ == '__main__':
+
+    print("Hello world")
+
+
     US = [-130.42,27.2,-59.33,49.68,-158.9,15.7,-151.5,22.3,-169.3,54.6,-141.0,71.4]
     UK = [-5.59,49.48,1.76,59.43]
     FR = [-5.08,42.07,7.73,50.03]
@@ -159,3 +164,9 @@ if __name__ == '__main__':
         twitter_stream.filter(track=[args.query], languages=[args.language], locations=countryCord[args.country])
     except:
         print("Error: " + str(sys.exc_info()))
+else:
+    print("Yeah")
+
+RestartAt = datetime.datetime.now().replace(hour=23, minute=59,second=59, microsecond=9000)
+if datetime.datetime.now() > RestartAt:
+    os.execv(sys.executable, ['python'] + sys.argv)
