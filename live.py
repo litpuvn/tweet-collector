@@ -164,6 +164,7 @@ if __name__ == '__main__':
         twitter_stream.filter(track=[args.query], languages=[args.language], locations=countryCord[args.country])
     except:
         print("Error: " + str(sys.exc_info()))
+        os.execv(sys.executable, ['python'] + sys.argv)
 else:
     print("Yeah")
 
