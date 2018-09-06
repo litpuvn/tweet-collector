@@ -165,9 +165,3 @@ if __name__ == '__main__':
     except:
         print("Error: " + str(sys.exc_info()))
         os.execv(sys.executable, ['python'] + sys.argv)
-else:
-    print("Yeah")
-
-RestartAt = datetime.datetime.now().replace(hour=23, minute=59,second=59, microsecond=9000)
-if datetime.datetime.now() > RestartAt:
-    os.execv(sys.executable, ['python'] + sys.argv)
