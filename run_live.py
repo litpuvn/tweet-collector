@@ -1,17 +1,20 @@
-import subprocess
+#!/usr/bin/env python
 import time
-import multiprocessing
+import subprocess
 
-def start():
-    print("starting live.py")
-    subprocess.call("./live.py", shell=True)
 
 
 if __name__ == '__main__':
+
+
+    c = 0
+
+
     while(True):
-        proc = multiprocessing.Process(target=start, name="start", args=())
-        proc.start()
+        print("been running for ",4*c," hours")
+        c = c+1
+        proc=subprocess.Popen("./live.py")
         time.sleep(60*60*4)
         proc.terminate()
-        proc.join()
+
 
