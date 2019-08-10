@@ -62,7 +62,7 @@ class MyListener(tweepy.StreamListener):
 		return
 	def on_data(self,data):
 		if(self.endProc is True):
-			return True
+			return False
 		if isinstance(data,unicode):
 			data = data.encode('utf-8')
 		if ('"text":' in data):
