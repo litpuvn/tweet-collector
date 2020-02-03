@@ -39,7 +39,7 @@ if __name__ == '__main__':
         print("Error: No input file selected. See the README.md file for more information.")
     else:
         a = args.attrib.split(",")
-        with open(str(args.input)+'.csv', 'w') as o:
+        with open(str(args.input)+'.csv', 'wb') as o:
             writer = csv.DictWriter(o, fieldnames=a)
             writer.writeheader()
             with open(str(args.input)+'.json', 'r') as f:
