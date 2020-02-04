@@ -1,4 +1,5 @@
 ## Command line tool to collect tweets data by keywords and date range - run.py
+### If you face 401 (authentication issue), it might be the time difference between system time and actual time in the machine location.
 
 1. Make sure you have python installed and import tweepy package.
 
